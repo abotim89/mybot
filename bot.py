@@ -1,14 +1,15 @@
 import os
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import Updater, CommandHandler
 
 TOKEN = os.getenv("BOT_TOKEN")
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("البوت يعمل بنجاح ✅")
+def start(update, context):
+    update.message.reply_text("البوت يعمل بنجاح ✅")
 
-app = ApplicationBuilder().token(TOKEN).build()
+updater = Updater(TOKEN)
 
-app.add_handler(CommandHandler("start", start))
+dp = updater.dispatcher
+dp.add_handler(CommandHandler("start", start))
 
-app.run_polling()
+updater.start_polling()
+updater.idle()
